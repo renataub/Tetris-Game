@@ -7,8 +7,9 @@ void main(){
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IntroScreen(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: IntroScreen(),
     );
   }
 }

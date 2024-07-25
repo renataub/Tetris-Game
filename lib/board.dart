@@ -41,7 +41,7 @@ class _GameBoardState extends State<GameBoard> {
           timer.cancel();
           showGameOverDialog();
         }
-        currentPiece.movePeice(values.Direction.down)
+        currentPiece.movePiece(values.Direction.down);
       });
     });
   }
@@ -76,15 +76,18 @@ class _GameBoardState extends State<GameBoard> {
     });
   }
 
-  void checkLanding(){
-    if(checkCollision(direction: values.Direction.down)){
-      for(int pos in currentPiece.position){
-        int row = (pos / rowLength).floor();
-        int col = pos % rowLength;
-        gameBoard[row][col] = currentPiece.type;
+  void checkLanding() {
+  if (checkCollision(direction: values.Direction.down)) {
+    for (int pos in currentPiece.position) {
+      int row = (pos / rowLength).floor();
+      int col = pos % rowLength;
+      if (row >= 0 && row < columnLength && col >= 0 && col < rowLength) {
+        gameBoard[row][col] = currentPiece.type; // הנחת על הלוח
       }
     }
+    createNewPiece();
   }
+}
 
   bool isGameOver(){
     return gameBoard[0].any((cell) => cell != null);
@@ -106,5 +109,111 @@ class _GameBoardState extends State<GameBoard> {
     }
   }
 
-  
+  void moveLeft(){
+    if(!checkCollision(direction: values.Direction.left)){
+      setState(() {
+        currentPiece.movePiece(values.Direction.left);
+      });
+    }
+    checkLanding();
+  }
+
+  void moveRight(){
+    if(!checkCollision(direction: values.Direction.right)){
+      setState(() {
+        currentPiece.movePiece(values.Direction.right);
+      });
+    }
+    checkLanding();
+  }
+
+  // void rotatePieceBoard(){
+  //   setState(() {
+  //     currentPiece.rotatePiece();
+  //     if(checkCollision(direction: values.Direction.down)){
+  //       currentPiece.rotatePiece();
+  //     }
+  //   });
+  //   checkLanding();
+  // }
+
+  void rotatePieceBoard() {
+    currentPiece.rotatePiece();
+    checkLanding();
+  }
+
+  void resetGame(){
+    gameBoard = List.generate(
+      columnLength, 
+      (_) => List.generate(rowLength, (_) => null),
+    );
+    gameOver = false;
+    currentScore = 0;
+    createNewPiece();
+    startGame();
+  }
+
+  Widget build(BuildContext context){
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                itemCount: rowLength * columnLength,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: rowLength,
+                ),
+                itemBuilder: (context, index){
+                  int row = (index / rowLength).floor();
+                  int col = index % rowLength;
+                  Color color;
+                  if(currentPiece.position.contains(index)){
+                    color = currentPiece.color;
+                  } else if(gameBoard[row][col] != null){
+                    color = values.tetrisShapeColors[gameBoard[row][col]]!;
+                  } else{
+                    color = Color.fromARGB(255, 48, 48, 48);
+                  }
+                  return Tile(color: color);
+                }
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(25),
+              child: Text("SCORE: $currentScore",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    onPressed: moveLeft, 
+                    color: Colors.grey,
+                    icon: Icon(Icons.arrow_back_ios),
+                  ),
+                  IconButton(
+                    onPressed: rotatePieceBoard, 
+                    color: Colors.grey,
+                    icon: Icon(Icons.rotate_right),
+                  ),
+                  IconButton(
+                    onPressed: moveRight, 
+                    color: Colors.grey,
+                    icon: Icon(Icons.arrow_forward_ios),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

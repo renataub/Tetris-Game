@@ -5,7 +5,7 @@ import 'values.dart' as values;
 class Piece{
   values.TetrisShape type;
   List<int> position = [];
-  int rotationState =0;
+  int rotationState = 1;
 
   Piece({required this.type});
 
@@ -37,7 +37,7 @@ class Piece{
     }
   }
 
-  void movePeice(values.Direction direction){
+  void movePiece(values.Direction direction){
     int offset = direction == values.Direction.down ? rowLength
        : (direction == values.Direction.left ? -1 : 1);
     for(int i = 0; i < position.length; i++){
@@ -45,24 +45,24 @@ class Piece{
     } 
   }
 
-  void rotatePiece() {
+void rotatePiece() {
     List<int> newPosition = []; // מיקום חדש לאחר הסיבוב
     switch (type) {
       case values.TetrisShape.L:
         if (rotationState == 0) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength + 1]; // סיבוב למצב 0
-        if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength - 1]; // סיבוב למצב 1
-        if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength - 1]; // סיבוב למצב 2
-        if (rotationState == 3) newPosition = [position[1] - rowLength + 1, position[1], position[1] + 1, position[1] - 1]; // סיבוב למצב 3
+        else if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength - 1]; // סיבוב למצב 1
+        else if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength - 1]; // סיבוב למצב 2
+        else if (rotationState == 3) newPosition = [position[1] - rowLength + 1, position[1], position[1] + 1, position[1] - 1]; // סיבוב למצב 3
         break;
       case values.TetrisShape.J:
         if (rotationState == 0) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength - 1]; // סיבוב למצב 0
-        if (rotationState == 1) newPosition = [position[1] - rowLength - 1, position[1], position[1] - 1, position[1] + 1]; // סיבוב למצב 1
-        if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 2
-        if (rotationState == 3) newPosition = [position[1] + 1, position[1], position[1] - 1, position[1] + rowLength + 1]; // סיבוב למצב 3
+        else if (rotationState == 1) newPosition = [position[1] - rowLength - 1, position[1], position[1] - 1, position[1] + 1]; // סיבוב למצב 1
+        else if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 2
+        else if (rotationState == 3) newPosition = [position[1] + 1, position[1], position[1] - 1, position[1] + rowLength + 1]; // סיבוב למצב 3
         break;
       case values.TetrisShape.I:
         if (rotationState == 0 || rotationState == 2) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + 2]; // סיבוב למצב 0 או 2
-        if (rotationState == 1 || rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + 2 * rowLength]; // סיבוב למצב 1 או 3
+        else if (rotationState == 1 || rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + 2 * rowLength]; // סיבוב למצב 1 או 3
         break;
       case values.TetrisShape.O:
         newPosition = position; // חלק O לא מסתובב
@@ -70,13 +70,13 @@ class Piece{
       case values.TetrisShape.S:
       case values.TetrisShape.Z:
         if (rotationState == 0 || rotationState == 2) newPosition = [position[1], position[1] + 1, position[1] + rowLength - 1, position[1] + rowLength]; // סיבוב למצב 0 או 2
-        if (rotationState == 1 || rotationState == 3) newPosition = [position[0] - rowLength, position[0], position[0] + 1, position[0] + rowLength + 1]; // סיבוב למצב 1 או 3
+        else if (rotationState == 1 || rotationState == 3) newPosition = [position[0] - rowLength, position[0], position[0] + 1, position[0] + rowLength + 1]; // סיבוב למצב 1 או 3
         break;
       case values.TetrisShape.T:
         if (rotationState == 0) newPosition = [position[2] - rowLength, position[2], position[2] + 1, position[2] + rowLength]; // סיבוב למצב 0
-        if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength]; // סיבוב למצב 1
-        if (rotationState == 2) newPosition = [position[1] - rowLength, position[1] - 1, position[1], position[1] + rowLength]; // סיבוב למצב 2
-        if (rotationState == 3) newPosition = [position[2] - rowLength, position[2] - 1, position[2], position[2] + 1]; // סיבוב למצב 3
+        else if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength]; // סיבוב למצב 1
+        else if (rotationState == 2) newPosition = [position[1] - rowLength, position[1] - 1, position[1], position[1] + rowLength]; // סיבוב למצב 2
+        else if (rotationState == 3) newPosition = [position[2] - rowLength, position[2] - 1, position[2], position[2] + 1]; // סיבוב למצב 3
         break;
     }
     // אם המיקום החדש תקין, עדכון מיקום החלק ומצב הסיבוב
@@ -86,13 +86,24 @@ class Piece{
     }
   }
 
-  bool piecePositionIsValid(List<int> piecePosition) {
-    for(int pos in piecePosition){
-      int row = (pos / rowLength).floor();
-      int col = pos % columnLength;
-      if(row < 0 || col < 0 || col >= rowLength || gameBoard[row][col] != null) return false;
+  // bool piecePositionIsValid(List<int> piecePosition) {
+  //   for(int pos in piecePosition){
+  //     int row = (pos / rowLength).floor();
+  //     int col = pos % rowLength;
+  //     if(row < 0 || col < 0 || col >= rowLength || gameBoard[row][col] != null) return false;
+  //   }
+  //   return true;
+  // }
+
+  bool piecePositionIsValid(List<int> newPosition) {
+    int boardSize = rowLength * columnLength;
+    for (int pos in newPosition) {
+      if (pos < 0 || pos >= boardSize) {
+        return false;
+      }
     }
     return true;
   }
+
 
 }
