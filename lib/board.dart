@@ -127,16 +127,6 @@ class _GameBoardState extends State<GameBoard> {
     checkLanding();
   }
 
-  // void rotatePieceBoard(){
-  //   setState(() {
-  //     currentPiece.rotatePiece();
-  //     if(checkCollision(direction: values.Direction.down)){
-  //       currentPiece.rotatePiece();
-  //     }
-  //   });
-  //   checkLanding();
-  // }
-
   void rotatePieceBoard() {
     currentPiece.rotatePiece();
     checkLanding();

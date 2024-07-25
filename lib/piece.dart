@@ -86,15 +86,6 @@ void rotatePiece() {
     }
   }
 
-  // bool piecePositionIsValid(List<int> piecePosition) {
-  //   for(int pos in piecePosition){
-  //     int row = (pos / rowLength).floor();
-  //     int col = pos % rowLength;
-  //     if(row < 0 || col < 0 || col >= rowLength || gameBoard[row][col] != null) return false;
-  //   }
-  //   return true;
-  // }
-
   bool piecePositionIsValid(List<int> newPosition) {
     int boardSize = rowLength * columnLength;
     for (int pos in newPosition) {

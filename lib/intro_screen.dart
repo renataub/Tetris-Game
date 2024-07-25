@@ -12,7 +12,7 @@ class IntroScreen extends StatelessWidget {
             ShaderMask(
               shaderCallback: (rect) {
                 return LinearGradient(
-                  colors: [Colors.blue, Colors.purple],
+                  colors: [Color.fromARGB(255, 39, 102, 228), Colors.purple, Colors.pink],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight
                 ).createShader(rect);
@@ -25,8 +25,8 @@ class IntroScreen extends StatelessWidget {
             SizedBox(height: 40),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                backgroundColor: const Color.fromARGB(255, 33, 96, 243),
+                padding: EdgeInsets.symmetric(horizontal: 60, vertical: 20),
                 textStyle: TextStyle(fontSize: 24),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
