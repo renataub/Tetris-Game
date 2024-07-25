@@ -86,4 +86,13 @@ class Piece{
     }
   }
 
+  bool piecePositionIsValid(List<int> piecePosition) {
+    for(int pos in piecePosition){
+      int row = (pos / rowLength).floor();
+      int col = pos % columnLength;
+      if(row < 0 || col < 0 || col >= rowLength || gameBoard[row][col] != null) return false;
+    }
+    return true;
+  }
+
 }

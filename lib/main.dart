@@ -7,9 +7,7 @@ void main(){
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      backgroundColor: Colors.black,
       body: IntroScreen(),
     );
   }

@@ -8,13 +8,21 @@ class IntroScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Welcome to tetris World!",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 41, 131, 221)),
+            ShaderMask(
+              shaderCallback: (rect) {
+                return LinearGradient(
+                  colors: [Colors.blue, Colors.purple],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight
+                ).createShader(rect);
+              },
+              child: Text("Welcome to tetris World!",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white,),
+              ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () => ,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 25),
                 // width: double.infinity,
