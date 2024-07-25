@@ -5,7 +5,7 @@ import 'values.dart' as values;
 class Piece{
   values.TetrisShape type;
   List<int> position = [];
-  int rotationState = 1;
+  int rotationState = 0;
 
   Piece({required this.type});
 
@@ -45,44 +45,92 @@ class Piece{
     } 
   }
 
-void rotatePiece() {
+// void rotatePiece() {
+//     List<int> newPosition = []; // מיקום חדש לאחר הסיבוב
+//     switch (type) {
+//       case values.TetrisShape.L:
+//         if (rotationState == 0) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength + 1]; // סיבוב למצב 0
+//         else if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength - 1]; // סיבוב למצב 1
+//         else if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength - 1]; // סיבוב למצב 2
+//         else if (rotationState == 3) newPosition = [position[1] - rowLength + 1, position[1], position[1] + 1, position[1] - 1]; // סיבוב למצב 3
+//         break;
+//       case values.TetrisShape.J:
+//         if (rotationState == 0) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength - 1]; // סיבוב למצב 0
+//         else if (rotationState == 1) newPosition = [position[1] - rowLength - 1, position[1], position[1] - 1, position[1] + 1]; // סיבוב למצב 1
+//         else if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 2
+//         else if (rotationState == 3) newPosition = [position[1] + 1, position[1], position[1] - 1, position[1] + rowLength + 1]; // סיבוב למצב 3
+//         break;
+//       case values.TetrisShape.I:
+//         if (rotationState == 0 || rotationState == 2) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + 2]; // סיבוב למצב 0 או 2
+//         else if (rotationState == 1 || rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + 2 * rowLength]; // סיבוב למצב 1 או 3
+//         break;
+//       case values.TetrisShape.O:
+//         newPosition = position; // חלק O לא מסתובב
+//         break;
+//       case values.TetrisShape.S:
+//       case values.TetrisShape.Z:
+//         if (rotationState == 0 || rotationState == 2) newPosition = [position[1], position[1] + 1, position[1] + rowLength - 1, position[1] + rowLength]; // סיבוב למצב 0 או 2
+//         else if (rotationState == 1 || rotationState == 3) newPosition = [position[0] - rowLength, position[0], position[0] + 1, position[0] + rowLength + 1]; // סיבוב למצב 1 או 3
+//         break;
+//       case values.TetrisShape.T:
+//         if (rotationState == 0) newPosition = [position[2] - rowLength, position[2], position[2] + 1, position[2] + rowLength]; // סיבוב למצב 0
+//         else if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength]; // סיבוב למצב 1
+//         else if (rotationState == 2) newPosition = [position[1] - rowLength, position[1] - 1, position[1], position[1] + rowLength]; // סיבוב למצב 2
+//         else if (rotationState == 3) newPosition = [position[2] - rowLength, position[2] - 1, position[2], position[2] + 1]; // סיבוב למצב 3
+//         break;
+//     }
+//     // אם המיקום החדש תקין, עדכון מיקום החלק ומצב הסיבוב
+//     if (piecePositionIsValid(newPosition)) {
+//       position = newPosition; // עדכון המיקום החדש
+//       rotationState = (rotationState + 1) % 4; // עדכון מצב הסיבוב הבא
+//     }
+//   }
+
+
+
+// סיבוב החלק
+  void rotatePiece() {
     List<int> newPosition = []; // מיקום חדש לאחר הסיבוב
     switch (type) {
       case values.TetrisShape.L:
-        if (rotationState == 0) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength + 1]; // סיבוב למצב 0
-        else if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength - 1]; // סיבוב למצב 1
-        else if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength - 1]; // סיבוב למצב 2
-        else if (rotationState == 3) newPosition = [position[1] - rowLength + 1, position[1], position[1] + 1, position[1] - 1]; // סיבוב למצב 3
+        if (rotationState == 0) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength - 1]; // סיבוב למצב 1
+        if (rotationState == 1) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength - 1]; // סיבוב למצב 2
+        if (rotationState == 2) newPosition = [position[1] - rowLength + 1, position[1], position[1] + 1, position[1] - 1]; // סיבוב למצב 3
+        if (rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength + 1]; // סיבוב למצב 0
         break;
       case values.TetrisShape.J:
-        if (rotationState == 0) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength - 1]; // סיבוב למצב 0
-        else if (rotationState == 1) newPosition = [position[1] - rowLength - 1, position[1], position[1] - 1, position[1] + 1]; // סיבוב למצב 1
-        else if (rotationState == 2) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 2
-        else if (rotationState == 3) newPosition = [position[1] + 1, position[1], position[1] - 1, position[1] + rowLength + 1]; // סיבוב למצב 3
+        if (rotationState == 0) newPosition = [position[1] - rowLength - 1, position[1], position[1] - 1, position[1] + 1]; // סיבוב למצב 1
+        if (rotationState == 1) newPosition = [position[1] + rowLength, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 2
+        if (rotationState == 2) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength + 1]; // סיבוב למצב 3
+        if (rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + rowLength - 1]; // סיבוב למצב 0
         break;
-      case values.TetrisShape.I:
-        if (rotationState == 0 || rotationState == 2) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + 2]; // סיבוב למצב 0 או 2
-        else if (rotationState == 1 || rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + 2 * rowLength]; // סיבוב למצב 1 או 3
+            case values.TetrisShape.I:
+        if (rotationState == 0 || rotationState == 2) newPosition = [position[1] - rowLength, position[1], position[1] + rowLength, position[1] + 2 * rowLength]; // סיבוב למצב 1 או 3
+        if (rotationState == 1 || rotationState == 3) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + 2]; // סיבוב למצב 0 או 2
         break;
       case values.TetrisShape.O:
-        newPosition = position; // חלק O לא מסתובב
+        newPosition = position;
         break;
       case values.TetrisShape.S:
-      case values.TetrisShape.Z:
-        if (rotationState == 0 || rotationState == 2) newPosition = [position[1], position[1] + 1, position[1] + rowLength - 1, position[1] + rowLength]; // סיבוב למצב 0 או 2
-        else if (rotationState == 1 || rotationState == 3) newPosition = [position[0] - rowLength, position[0], position[0] + 1, position[0] + rowLength + 1]; // סיבוב למצב 1 או 3
+        if (rotationState == 0) newPosition = [position[1] - 1, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 1
+        if (rotationState == 1) newPosition = [position[1] - rowLength, position[1], position[1] + 1, position[1] + rowLength + 1]; // סיבוב למצב 2
+        if (rotationState == 2) newPosition = [position[1] - 1, position[1], position[1] - rowLength, position[1] - rowLength + 1]; // סיבוב למצב 3
+        if (rotationState == 3) newPosition = [position[1] - rowLength, position[1], position[1] + 1, position[1] + rowLength + 1]; // סיבוב למצב 0
         break;
-      case values.TetrisShape.T:
-        if (rotationState == 0) newPosition = [position[2] - rowLength, position[2], position[2] + 1, position[2] + rowLength]; // סיבוב למצב 0
-        else if (rotationState == 1) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength]; // סיבוב למצב 1
-        else if (rotationState == 2) newPosition = [position[1] - rowLength, position[1] - 1, position[1], position[1] + rowLength]; // סיבוב למצב 2
-        else if (rotationState == 3) newPosition = [position[2] - rowLength, position[2] - 1, position[2], position[2] + 1]; // סיבוב למצב 3
+       case values.TetrisShape.Z:
+        if (rotationState == 0 || rotationState == 2) newPosition = [position[0] - rowLength, position[0], position[0] + 1, position[0] + rowLength + 1]; // סיבוב למצב 1 או 3
+        if (rotationState == 1 || rotationState == 3) newPosition = [position[1], position[1] + 1, position[1] + rowLength - 1, position[1] + rowLength]; // סיבוב למצב 0 או 2
+        break;
+       case values.TetrisShape.T:
+        if (rotationState == 0) newPosition = [position[1] - 1, position[1], position[1] + 1, position[1] + rowLength]; // סיבוב למצב 1
+        if (rotationState == 1) newPosition = [position[1] - rowLength, position[1] - 1, position[1], position[1] + rowLength]; // סיבוב למצב 2
+        if (rotationState == 2) newPosition = [position[2] - rowLength, position[2] - 1, position[2], position[2] + 1]; // סיבוב למצב 3
+        if (rotationState == 3) newPosition = [position[2] - rowLength, position[2], position[2] + 1, position[2] + rowLength]; // סיבוב למצב 0
         break;
     }
-    // אם המיקום החדש תקין, עדכון מיקום החלק ומצב הסיבוב
     if (piecePositionIsValid(newPosition)) {
-      position = newPosition; // עדכון המיקום החדש
-      rotationState = (rotationState + 1) % 4; // עדכון מצב הסיבוב הבא
+      position = newPosition;
+      rotationState = (rotationState + 1) % 4;
     }
   }
 
